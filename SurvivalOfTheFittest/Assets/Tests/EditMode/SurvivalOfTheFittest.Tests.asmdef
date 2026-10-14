@@ -1,0 +1,22 @@
+{
+    "name": "SurvivalOfTheFittest.Tests",
+    "rootNamespace": "SurvivalOfTheFittest.Tests",
+    "references": [
+        "SurvivalOfTheFittest.Runtime",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
