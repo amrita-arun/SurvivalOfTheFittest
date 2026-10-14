@@ -115,6 +115,9 @@ namespace SurvivalOfTheFittest
             if (kb.rKey.wasPressedThisFrame)
                 RestartGame();
 
+            if (kb.fKey.wasPressedThisFrame)
+                _fog?.ToggleDebugReveal();
+
             if (kb.qKey.wasPressedThisFrame || kb.escapeKey.wasPressedThisFrame)
                 QuitGame();
         }

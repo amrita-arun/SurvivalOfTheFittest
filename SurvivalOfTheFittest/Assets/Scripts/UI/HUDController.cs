@@ -69,7 +69,7 @@ namespace SurvivalOfTheFittest.UI
             _dashFill.fillMethod = Image.FillMethod.Horizontal;
 
             _controlsText = UiFactory.Text(root, "Controls",
-                "WASD / Arrows move  •  Shift/Space dash  •  R restart  •  Q/Esc quit", 17,
+                "WASD / Arrows move  •  Shift/Space dash  •  R restart  •  F reveal  •  Q/Esc quit", 17,
                 new Color(0.75f, 0.75f, 0.85f, 0.9f), TextAnchor.LowerCenter);
             SetRect(_controlsText.rectTransform, new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 12), new Vector2(0, 40));
 

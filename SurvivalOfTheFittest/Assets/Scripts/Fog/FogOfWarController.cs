@@ -21,6 +21,7 @@ namespace SurvivalOfTheFittest
         private SpriteRenderer _sr;
         private Coroutine _fadeRoutine;
         private float _currentAlpha;
+        private bool _debugRevealed;
 
         public void Initialize(Transform followTarget)
         {
@@ -52,11 +53,31 @@ namespace SurvivalOfTheFittest
 
         private void LateUpdate()
         {
-            if (_follow == null)
-                return;
+            if (_follow != null)
+            {
+                var p = _follow.position;
+                transform.position = new Vector3(p.x, p.y, 0f);
+            }
 
-            var p = _follow.position;
-            transform.position = new Vector3(p.x, p.y, 0f);
+            // Debug reveal holds the fog fully transparent until toggled off.
+            if (_debugRevealed && !Mathf.Approximately(_currentAlpha, 0f))
+            {
+                _currentAlpha = 0f;
+                ApplyAlpha();
+            }
+        }
+
+        /// <summary>Dev tool: press F to flip the whole maze visible/hidden.</summary>
+        public void ToggleDebugReveal()
+        {
+            _debugRevealed = !_debugRevealed;
+            if (_fadeRoutine != null)
+            {
+                StopCoroutine(_fadeRoutine);
+                _fadeRoutine = null;
+            }
+            _currentAlpha = _debugRevealed ? 0f : maxFogAlpha;
+            ApplyAlpha();
         }
 
         public void PlayFullReveal(float holdDuration, System.Action onComplete = null)
