@@ -43,7 +43,7 @@ namespace SurvivalOfTheFittest.UI
             _heartsText = UiFactory.Text(top, "Hearts", "♥♥♥", 28, new Color(1f, 0.35f, 0.5f), TextAnchor.MiddleCenter, FontStyle.Bold);
             SetRect(_heartsText.rectTransform, new Vector2(0.25f, 0), new Vector2(0.45f, 1), Vector2.zero, Vector2.zero);
 
-            _gemsText = UiFactory.Text(top, "Gems", "Gems 0", 26, new Color(1f, 0.4f, 0.9f), TextAnchor.MiddleCenter, FontStyle.Bold);
+            _gemsText = UiFactory.Text(top, "Gems", "Flags 0", 26, new Color(0.3f, 0.9f, 0.45f), TextAnchor.MiddleCenter, FontStyle.Bold);
             SetRect(_gemsText.rectTransform, new Vector2(0.45f, 0), new Vector2(0.65f, 1), Vector2.zero, Vector2.zero);
 
             _tierText = UiFactory.Text(top, "Tier", "Unprepared", 22, new Color(1f, 0.85f, 0.4f), TextAnchor.MiddleCenter);
@@ -97,7 +97,7 @@ namespace SurvivalOfTheFittest.UI
             }
 
             if (_gemsText != null)
-                _gemsText.text = $"GEMS {lifetimeGems}";
+                _gemsText.text = $"FLAGS {lifetimeGems}";
 
             if (_tierText != null)
             {

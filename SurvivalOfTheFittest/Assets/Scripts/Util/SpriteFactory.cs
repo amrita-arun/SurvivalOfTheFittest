@@ -30,6 +30,68 @@ namespace SurvivalOfTheFittest
             }
         }
 
+        private static Sprite _greenFlag;
+
+        public static Sprite GreenFlag
+        {
+            get
+            {
+                if (_greenFlag == null)
+                    _greenFlag = CreateFlagSprite(64);
+                return _greenFlag;
+            }
+        }
+
+        /// <summary>
+        /// White flag silhouette (pole + right-pointing pennant). Tinted by the renderer.
+        /// </summary>
+        public static Sprite CreateFlagSprite(int size)
+        {
+            var tex = new Texture2D(size, size, TextureFormat.RGBA32, false)
+            {
+                filterMode = FilterMode.Bilinear,
+                wrapMode = TextureWrapMode.Clamp,
+                name = "SOTF_Flag"
+            };
+
+            var clear = new Color(0f, 0f, 0f, 0f);
+            for (var y = 0; y < size; y++)
+                for (var x = 0; x < size; x++)
+                    tex.SetPixel(x, y, clear);
+
+            const float poleX0 = 0.30f, poleX1 = 0.40f, poleY0 = 0.08f, poleY1 = 0.92f;
+            const float flagBaseX = 0.40f, flagTipX = 0.86f;
+            const float flagTopY = 0.90f, flagMidY = 0.74f, flagBotY = 0.58f;
+
+            for (var y = 0; y < size; y++)
+            {
+                var ny = y / (float)(size - 1);
+                for (var x = 0; x < size; x++)
+                {
+                    var nx = x / (float)(size - 1);
+                    var on = false;
+
+                    if (nx >= poleX0 && nx <= poleX1 && ny >= poleY0 && ny <= poleY1)
+                        on = true;
+
+                    if (nx >= flagBaseX && nx <= flagTipX)
+                    {
+                        var t = (nx - flagBaseX) / (flagTipX - flagBaseX);
+                        var halfTop = Mathf.Lerp(flagTopY - flagMidY, 0f, t);
+                        var halfBot = Mathf.Lerp(flagMidY - flagBotY, 0f, t);
+                        if (ny <= flagMidY + halfTop && ny >= flagMidY - halfBot)
+                            on = true;
+                    }
+
+                    if (on)
+                        tex.SetPixel(x, y, Color.white);
+                }
+            }
+
+            tex.Apply();
+            return Sprite.Create(tex, new Rect(0, 0, size, size), new Vector2(0.5f, 0.5f), 32f);
+        }
+
         public static Sprite CreateFilledSprite(int width, int height, Color color, bool circle)
         {
             var tex = new Texture2D(width, height, TextureFormat.RGBA32, false)

@@ -38,9 +38,9 @@ namespace SurvivalOfTheFittest.UI
                 "Survive modern dating in a dark maze.\n\n" +
                 "• Move with WASD or Arrow Keys\n" +
                 "• Explore — only a small circle around you is visible\n" +
-                "• Collect gems to raise your score & Confidence\n" +
-                "• Every 3rd gem activates CLARITY (full maze reveal)\n" +
-                "• More gems = better encounter odds (die stays fair!)\n" +
+                "• Collect green flags to raise your Confidence\n" +
+                "• Every 3rd green flag activates CLARITY (full maze reveal)\n" +
+                "• More green flags = better encounter odds (die stays fair!)\n" +
                 "• Face dating obstacles: choose an action, then roll a d6\n" +
                 "• Reach the EXIT with hearts left before time runs out\n\n" +
                 "R = Restart   •   Q / Esc = Quit";

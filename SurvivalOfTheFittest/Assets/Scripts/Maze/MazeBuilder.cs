@@ -9,7 +9,7 @@ namespace SurvivalOfTheFittest
         [SerializeField] private Color wallColor = new Color(0.35f, 0.1f, 0.45f, 1f);
         [SerializeField] private Color floorColor = new Color(0.08f, 0.08f, 0.14f, 1f);
         [SerializeField] private Color exitColor = new Color(0.2f, 1f, 0.75f, 1f);
-        [SerializeField] private Color gemColor = new Color(1f, 0.35f, 0.85f, 1f);
+        [SerializeField] private Color gemColor = new Color(0.25f, 0.9f, 0.4f, 1f);
 
         public Transform WallsRoot { get; private set; }
         public Transform FloorRoot { get; private set; }
@@ -170,7 +170,7 @@ namespace SurvivalOfTheFittest
             go.transform.localScale = Vector3.one * 0.45f;
 
             var sr = go.AddComponent<SpriteRenderer>();
-            sr.sprite = SpriteFactory.WhiteCircle;
+            sr.sprite = SpriteFactory.GreenFlag;
             sr.color = gemColor;
             sr.sortingOrder = 3;
 

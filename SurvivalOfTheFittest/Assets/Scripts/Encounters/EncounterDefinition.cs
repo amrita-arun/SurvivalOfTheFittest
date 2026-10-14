@@ -66,9 +66,9 @@ namespace SurvivalOfTheFittest
                     Risk = EncounterRisk.Risky,
                     SuccessReward = EncounterRewardType.BonusGem,
                     FailExtra = EncounterFailExtra.CheckpointReturn,
-                    SuccessFlavor = "Closure AND a shiny gem. Growth looks good on you.",
+                    SuccessFlavor = "Closure AND a shiny green flag. Growth looks good on you.",
                     FailFlavor = "Emotional ambush! Heart lost — back to safer ground.",
-                    RewardHint = "+1 bonus gem"
+                    RewardHint = "+1 green flag"
                 }
             };
         }
@@ -98,9 +98,9 @@ namespace SurvivalOfTheFittest
                     SuccessReward = EncounterRewardType.BonusGem,
                     FailExtra = EncounterFailExtra.LoseTime,
                     FailTimePenalty = 5f,
-                    SuccessFlavor = "Miraculously, a gem instead of a red flag.",
+                    SuccessFlavor = "Miraculously, a green flag instead of a red flag.",
                     FailFlavor = "Doom-swiped. -1 heart and 5 seconds of your life.",
-                    RewardHint = "+1 bonus gem"
+                    RewardHint = "+1 green flag"
                 }
             };
         }

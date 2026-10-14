@@ -49,7 +49,7 @@ namespace SurvivalOfTheFittest.UI
             _root.SetActive(true);
             _title.color = new Color(0.4f, 1f, 0.8f);
             _title.text = "YOU ESCAPED THE DATING POOL!";
-            _details.text = $"Time remaining: {Mathf.CeilToInt(timeLeft)}s\nTotal gems: {gems}\n\nPress R to try another round.";
+            _details.text = $"Time remaining: {Mathf.CeilToInt(timeLeft)}s\nTotal green flags: {gems}\n\nPress R to try another round.";
         }
 
         public void ShowLoss(string reason, int gems)
@@ -57,7 +57,7 @@ namespace SurvivalOfTheFittest.UI
             _root.SetActive(true);
             _title.color = new Color(1f, 0.4f, 0.5f);
             _title.text = "BACK TO THE APPS…";
-            _details.text = $"{reason}\nGems collected: {gems}\n\nPress R to restart.";
+            _details.text = $"{reason}\nGreen flags collected: {gems}\n\nPress R to restart.";
         }
 
         public void Hide()

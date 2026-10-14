@@ -130,9 +130,9 @@ namespace SurvivalOfTheFittest.UI
 
             var tier = GemOddsCalculator.GetTier(lifetimeGems);
             _confidenceText.text =
-                $"Confidence: {GemOddsCalculator.GetTierDisplayName(tier)} — {lifetimeGems} Gems";
+                $"Confidence: {GemOddsCalculator.GetTierDisplayName(tier)} — {lifetimeGems} Green Flags";
             _blurbText.text = GemOddsCalculator.GetConfidenceBlurb(lifetimeGems) +
-                              "\nGems improve your odds by lowering the roll you need. The die stays fair.";
+                              "\nGreen flags improve your odds by lowering the roll you need. The die stays fair.";
 
             if (_safeLabel != null && _safe != null)
                 _safeLabel.text = FormatChoice(_safe, lifetimeGems);

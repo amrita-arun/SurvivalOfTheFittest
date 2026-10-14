@@ -12,10 +12,10 @@ namespace SurvivalOfTheFittest
     {
         [Header("Visibility")]
         [Tooltip("World units of clear visibility around the player.")]
-        [SerializeField] private float visibilityRadius = 2.4f;
+        [SerializeField] private float visibilityRadius = 1.4f;
 
         [SerializeField] private float fogSpriteWorldSize = 80f;
-        [SerializeField] private float maxFogAlpha = 0.96f;
+        [SerializeField] private float maxFogAlpha = 1f;
         [SerializeField] private float revealFadeSeconds = 0.35f;
 
         private Transform _follow;
