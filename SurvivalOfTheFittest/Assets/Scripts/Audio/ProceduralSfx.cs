@@ -40,7 +40,7 @@ namespace SurvivalOfTheFittest
             Win = Chord(new[] { 392f, 523f, 659f, 784f }, 0.55f, 0.35f);
             Loss = Sweep(400f, 120f, 0.5f, 0.35f);
             Dash = Blip(240f, 0.08f, 0.25f, slideTo: 480f);
-            Footstep = Bell(523.25f, 0.22f, 0.6f);
+            Footstep = NoiseBurst(0.035f, 0.12f);
             Blocked = Blip(140f, 0.1f, 0.3f, square: true);
             UiClick = Blip(660f, 0.04f, 0.2f);
         }
@@ -88,28 +88,6 @@ namespace SurvivalOfTheFittest
             }
 
             return ClipFrom("sfx_chord", data);
-        }
-
-        /// <summary>
-        /// Soft music-box bell: a warm fundamental with gentle harmonics and a
-        /// quick shimmering decay. Pitch-shifted per step to form a dreamy melody.
-        /// </summary>
-        private static AudioClip Bell(float hz, float duration, float volume)
-        {
-            var samples = Mathf.CeilToInt(SampleRate * duration);
-            var data = new float[samples];
-            for (var i = 0; i < samples; i++)
-            {
-                var n = i / (float)samples;
-                var t = i / (float)SampleRate;
-                var env = (n < 0.006f ? n / 0.006f : 1f) * Mathf.Exp(-n * 4.5f);
-                var s = Mathf.Sin(t * hz * 2f * Mathf.PI)
-                        + 0.35f * Mathf.Sin(t * hz * 2f * 2f * Mathf.PI)
-                        + 0.12f * Mathf.Sin(t * hz * 3f * 2f * Mathf.PI);
-                data[i] = (s / 1.47f) * env * volume;
-            }
-
-            return ClipFrom("sfx_step_bell", data);
         }
 
         private static AudioClip NoiseBurst(float duration, float volume)

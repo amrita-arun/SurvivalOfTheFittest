@@ -30,11 +30,6 @@ namespace SurvivalOfTheFittest
         private AudioSource _source;
         private AudioSource _footSource;
 
-        // Pentatonic step melody (pleasant, no dissonant notes), walked up and down.
-        private static readonly float[] StepScale = { 1f, 1.125f, 1.25f, 1.5f, 1.667f, 2f };
-        private int _stepIdx;
-        private int _stepDir = 1;
-
         private void Awake()
         {
             Instance = this;
@@ -76,14 +71,8 @@ namespace SurvivalOfTheFittest
             var clip = footstep != null ? footstep : ProceduralSfx.Footstep;
             if (clip == null || _footSource == null)
                 return;
-
-            // Step the melody up and down the pentatonic scale for a dreamy wander.
-            _footSource.pitch = StepScale[_stepIdx];
-            _stepIdx += _stepDir;
-            if (_stepIdx >= StepScale.Length) { _stepIdx = StepScale.Length - 2; _stepDir = -1; }
-            else if (_stepIdx < 0) { _stepIdx = 1; _stepDir = 1; }
-
-            _footSource.PlayOneShot(clip, masterVolume * 0.3f);
+            _footSource.pitch = 0.92f + (Time.frameCount % 5) * 0.03f;
+            _footSource.PlayOneShot(clip, masterVolume * 0.35f);
         }
 
         private void Play(AudioClip overrideClip, AudioClip procedural, float volumeScale)
