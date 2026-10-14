@@ -164,7 +164,9 @@ namespace SurvivalOfTheFittest
             {
                 { 'A', EncounterDefinition.CreateEx() },
                 { 'B', EncounterDefinition.CreateApp() },
-                { 'C', EncounterDefinition.CreateMixed() }
+                { 'C', EncounterDefinition.CreateMixed() },
+                { 'D', EncounterDefinition.CreateFamilyFriend() },
+                { 'E', EncounterDefinition.CreateFriendsEx() }
             };
 
             foreach (var (id, pos) in _maze.EncounterPositions)

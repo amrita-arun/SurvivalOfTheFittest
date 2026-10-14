@@ -41,6 +41,7 @@ namespace SurvivalOfTheFittest
         public Color Color;
         public EncounterActionDef SafeAction;
         public EncounterActionDef RiskyAction;
+        public bool CountsTowardExit = true;
 
         public static EncounterDefinition CreateEx()
         {
@@ -136,5 +137,72 @@ namespace SurvivalOfTheFittest
                 }
             };
         }
+
+        public static EncounterDefinition CreateFamilyFriend()
+        {
+            return new EncounterDefinition
+            {
+                MazeId = 'D',
+                DisplayName = "The Family Friend",
+                Dialogue = "Your mom gave me your number... I already added you on LinkedIn.",
+                Color = new Color(1f, 0.6f, 0.3f, 1f),
+                CountsTowardExit = false,
+                SafeAction = new EncounterActionDef
+                {
+                    Label = "Politely Decline",
+                    Risk = EncounterRisk.Safe,
+                    SuccessReward = EncounterRewardType.EscapeOnly,
+                    FailExtra = EncounterFailExtra.None,
+                    SuccessFlavor = "You dodged it. Mom's disappointed but you're free.",
+                    FailFlavor = "Now it's a whole family group chat. -1 heart.",
+                    RewardHint = "Escape safely"
+                },
+                RiskyAction = new EncounterActionDef
+                {
+                    Label = "Give Him a Chance",
+                    Risk = EncounterRisk.Risky,
+                    SuccessReward = EncounterRewardType.BonusGem,
+                    FailExtra = EncounterFailExtra.LoseTime,
+                    FailTimePenalty = 5f,
+                    SuccessFlavor = "Plot twist: he's actually lovely. +1 green flag, mom's thrilled.",
+                    FailFlavor = "Three hours of small talk about his startup. -1 heart, -5 seconds.",
+                    RewardHint = "+1 green flag"
+                }
+            };
+        }
+
+        public static EncounterDefinition CreateFriendsEx()
+        {
+            return new EncounterDefinition
+            {
+                MazeId = 'E',
+                DisplayName = "Your Friend's Ex",
+                Dialogue = "I know I'm your bestie's ex... but we'd be kind of perfect, no?",
+                Color = new Color(0.7f, 0.4f, 0.95f, 1f),
+                CountsTowardExit = false,
+                SafeAction = new EncounterActionDef
+                {
+                    Label = "Respect the Code",
+                    Risk = EncounterRisk.Safe,
+                    SuccessReward = EncounterRewardType.EscapeOnly,
+                    FailExtra = EncounterFailExtra.None,
+                    SuccessFlavor = "Loyalty upheld. Your friend never has to know. Clean exit.",
+                    FailFlavor = "You overthought it and sent a weird text. -1 heart.",
+                    RewardHint = "Escape safely"
+                },
+                RiskyAction = new EncounterActionDef
+                {
+                    Label = "Shoot Your Shot",
+                    Risk = EncounterRisk.Risky,
+                    SuccessReward = EncounterRewardType.BonusTime,
+                    SuccessTimeBonus = 5f,
+                    FailExtra = EncounterFailExtra.ReturnLastSafe,
+                    SuccessFlavor = "Forbidden spark, undeniable chemistry. +5 seconds of chaos.",
+                    FailFlavor = "The group chat found out. Friendship imploded. Back you go.",
+                    RewardHint = "+5 seconds"
+                }
+            };
+        }
+
     }
 }

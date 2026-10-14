@@ -265,8 +265,7 @@ namespace SurvivalOfTheFittest
                 Hearts,
                 LifetimeGems,
                 EncountersResolved,
-                encountersRequiredToExit,
-                _player != null ? _player.DashCooldownNormalized : 0f);
+                encountersRequiredToExit);
         }
     }
 }

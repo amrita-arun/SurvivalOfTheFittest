@@ -18,7 +18,6 @@ namespace SurvivalOfTheFittest
         public static AudioClip Clarity { get; private set; }
         public static AudioClip Win { get; private set; }
         public static AudioClip Loss { get; private set; }
-        public static AudioClip Dash { get; private set; }
         public static AudioClip Footstep { get; private set; }
         public static AudioClip Blocked { get; private set; }
         public static AudioClip UiClick { get; private set; }
@@ -39,7 +38,6 @@ namespace SurvivalOfTheFittest
             Clarity = Sweep(300f, 900f, 0.45f, 0.28f);
             Win = Chord(new[] { 392f, 523f, 659f, 784f }, 0.55f, 0.35f);
             Loss = Sweep(400f, 120f, 0.5f, 0.35f);
-            Dash = Blip(240f, 0.08f, 0.25f, slideTo: 480f);
             Footstep = NoiseBurst(0.035f, 0.12f);
             Blocked = Blip(140f, 0.1f, 0.3f, square: true);
             UiClick = Blip(660f, 0.04f, 0.2f);

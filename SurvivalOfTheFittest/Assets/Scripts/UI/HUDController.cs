@@ -14,9 +14,7 @@ namespace SurvivalOfTheFittest.UI
         private Text _encounterText;
         private Text _controlsText;
         private Text _bannerText;
-        private Text _dashText;
         private CanvasGroup _rootGroup;
-        private Image _dashFill;
 
         private void Awake()
         {
@@ -54,22 +52,8 @@ namespace SurvivalOfTheFittest.UI
                 new Color(1f, 0.55f, 0.75f), TextAnchor.MiddleLeft, FontStyle.Bold);
             SetRect(_encounterText.rectTransform, new Vector2(0, 0), new Vector2(0.45f, 0.5f), Vector2.zero, Vector2.zero);
 
-            var dashBox = UiFactory.Box(top, "Dash", new Vector2(0.5f, 0.08f), new Vector2(0.98f, 0.42f),
-                Vector2.zero, Vector2.zero, new Color(0.1f, 0.15f, 0.2f, 0.85f));
-            _dashText = UiFactory.Text(dashBox, "DashLabel", "DASH Ready  (Shift/Space)", 14,
-                new Color(0.5f, 1f, 0.9f), TextAnchor.MiddleLeft);
-            SetRect(_dashText.rectTransform, new Vector2(0.02f, 0), new Vector2(0.7f, 1), Vector2.zero, Vector2.zero);
-
-            var fillBg = UiFactory.Box(dashBox, "DashFillBg", new Vector2(0.72f, 0.25f), new Vector2(0.96f, 0.75f),
-                Vector2.zero, Vector2.zero, new Color(0.2f, 0.25f, 0.3f, 1f));
-            var fill = UiFactory.Box(fillBg, "DashFill", new Vector2(0, 0), new Vector2(1, 1),
-                Vector2.zero, Vector2.zero, new Color(0.35f, 1f, 0.85f, 1f));
-            _dashFill = fill.GetComponent<Image>();
-            _dashFill.type = Image.Type.Filled;
-            _dashFill.fillMethod = Image.FillMethod.Horizontal;
-
             _controlsText = UiFactory.Text(root, "Controls",
-                "WASD / Arrows move  •  Shift/Space dash  •  R restart  •  F reveal  •  Q/Esc quit", 17,
+                "WASD / Arrows move  •  R restart  •  F reveal  •  Q/Esc quit", 17,
                 new Color(0.75f, 0.75f, 0.85f, 0.9f), TextAnchor.LowerCenter);
             SetRect(_controlsText.rectTransform, new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 12), new Vector2(0, 40));
 
@@ -97,8 +81,7 @@ namespace SurvivalOfTheFittest.UI
             int hearts,
             int lifetimeGems,
             int encountersResolved,
-            int encountersRequired,
-            float dashCooldownNormalized)
+            int encountersRequired)
         {
             if (_timeText != null)
             {
@@ -133,17 +116,6 @@ namespace SurvivalOfTheFittest.UI
                 _encounterText.color = unlocked
                     ? new Color(0.45f, 1f, 0.7f)
                     : new Color(1f, 0.55f, 0.75f);
-            }
-
-            if (_dashFill != null)
-            {
-                var ready = dashCooldownNormalized <= 0.01f;
-                _dashFill.fillAmount = ready ? 1f : 1f - dashCooldownNormalized;
-                _dashFill.color = ready
-                    ? new Color(0.35f, 1f, 0.85f, 1f)
-                    : new Color(0.4f, 0.55f, 0.6f, 1f);
-                if (_dashText != null)
-                    _dashText.text = ready ? "DASH Ready  (Shift/Space)" : "DASH cooling…";
             }
         }
 

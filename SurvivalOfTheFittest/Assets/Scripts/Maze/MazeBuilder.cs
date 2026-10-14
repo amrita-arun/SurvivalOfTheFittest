@@ -59,6 +59,8 @@ namespace SurvivalOfTheFittest
                             case 'A':
                             case 'B':
                             case 'C':
+                            case 'D':
+                            case 'E':
                                 EncounterPositions.Add((cell, world));
                                 break;
                         }

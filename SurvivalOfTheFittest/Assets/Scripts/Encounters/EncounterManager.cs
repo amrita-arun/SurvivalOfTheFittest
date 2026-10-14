@@ -139,8 +139,10 @@ namespace SurvivalOfTheFittest
             if (!_awaitingAck || _active == null)
                 return;
 
+            var countsTowardExit = _active.Definition != null && _active.Definition.CountsTowardExit;
             _active.MarkResolved();
-            _resolvedCount++;
+            if (countsTowardExit)
+                _resolvedCount++;
             _active = null;
             _chosenAction = null;
             _awaitingAck = false;

@@ -41,7 +41,11 @@ namespace SurvivalOfTheFittest
             go.transform.localPosition = new Vector3(0f, 0.7f, 0f);
 
             var shortName = text.Length > 14 ? text.Substring(0, 14) : text;
-            if (text.Contains("Ex"))
+            if (text.Contains("Family"))
+                shortName = "MOM'S PICK";
+            else if (text.Contains("Friend's"))
+                shortName = "FRIEND'S EX";
+            else if (text.Contains("Ex"))
                 shortName = "EX";
             else if (text.Contains("App"))
                 shortName = "APP";

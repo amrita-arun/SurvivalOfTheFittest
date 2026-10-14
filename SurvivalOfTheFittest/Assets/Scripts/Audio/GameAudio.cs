@@ -19,7 +19,6 @@ namespace SurvivalOfTheFittest
         [SerializeField] private AudioClip clarityReveal;
         [SerializeField] private AudioClip win;
         [SerializeField] private AudioClip loss;
-        [SerializeField] private AudioClip dash;
         [SerializeField] private AudioClip footstep;
         [SerializeField] private AudioClip blocked;
         [SerializeField] private AudioClip uiClick;
@@ -62,7 +61,6 @@ namespace SurvivalOfTheFittest
         public void PlayClarity() => Play(clarityReveal, ProceduralSfx.Clarity, 1f);
         public void PlayWin() => Play(win, ProceduralSfx.Win, 1f);
         public void PlayLoss() => Play(loss, ProceduralSfx.Loss, 1f);
-        public void PlayDash() => Play(dash, ProceduralSfx.Dash, 0.85f);
         public void PlayBlocked() => Play(blocked, ProceduralSfx.Blocked, 0.9f);
         public void PlayUiClick() => Play(uiClick, ProceduralSfx.UiClick, 0.7f);
 
