@@ -6,7 +6,6 @@ namespace SurvivalOfTheFittest
     /// <summary>
     /// Nearly opaque darkness with a soft circular visibility hole that follows the player.
     /// Previously visited areas return to darkness — no permanent uncovering.
-    /// Full Clarity reveal fades the fog out temporarily (deterministic).
     /// </summary>
     public class FogOfWarController : MonoBehaviour
     {

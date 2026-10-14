@@ -36,13 +36,12 @@ namespace SurvivalOfTheFittest.UI
 
             var body =
                 "Survive modern dating in a dark maze.\n\n" +
-                "• Move with WASD or Arrow Keys\n" +
-                "• Explore — only a small circle around you is visible\n" +
-                "• Collect green flags to raise your Confidence\n" +
-                "• Every 3rd green flag activates CLARITY (full maze reveal)\n" +
-                "• More green flags = better encounter odds (die stays fair!)\n" +
-                "• Face dating obstacles: choose an action, then roll a d6\n" +
-                "• Reach the EXIT with hearts left before time runs out\n\n" +
+                "• Move: WASD / Arrows  •  Dash: Shift or Space\n" +
+                "• Green flags raise Confidence, but they sit on side paths.\n" +
+                "• Taking every flag is a long detour.\n" +
+                "• The exit is behind three gates: the Ex, the App, then Mixed Signals.\n" +
+                "• You cannot walk around them. Grab what you can afford, then commit.\n" +
+                "• 90 seconds. The maze stays dark. Keep your hearts.\n\n" +
                 "R = Restart   •   Q / Esc = Quit";
 
             UiFactory.Text(card, "Body", body, 24, new Color(0.9f, 0.9f, 0.95f), TextAnchor.MiddleLeft);

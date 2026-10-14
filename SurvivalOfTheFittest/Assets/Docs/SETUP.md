@@ -13,7 +13,8 @@
 2. Open `Assets/Scenes/SampleScene.unity` (or any scene).
 3. Press **Play**.
 4. Click **START DATING (THE MAZE)** on the tutorial panel.
-5. Play with **WASD / Arrows**. **R** restarts. **Q / Esc** quits.
+5. Play with **WASD / Arrows**, **Shift/Space** to dash. **R** restarts. **Q / Esc** quits.
+6. Flags sit on side paths. Pass all **3** dating gates to reach the EXIT. Timer starts at **90s**, and there is no full-maze reveal. Procedural SFX play automatically (optional clips can still be assigned on `GameAudio`).
 
 Optional: menu **Survival of the Fittest → Setup Game Scene** adds an explicit `GameBootstrap` object and configures the camera. This is not required because `GameBootstrap` auto-creates at runtime.
 
@@ -50,7 +51,7 @@ Optional: menu **Survival of the Fittest → Setup Game Scene** adds an explicit
 
 Select the `Systems` object → `GameAudio` and assign clips to:
 
-- Gem Collect, Encounter Open, Dice Roll, Success, Failure, Clarity Reveal, Win, Loss
+- Gem Collect, Encounter Open, Dice Roll, Success, Failure, Win, Loss
 
 Leaving them empty is valid — the game never requires clips.
 
@@ -60,7 +61,7 @@ Leaving them empty is valid — the game never requires clips.
 2. Select **Edit Mode**
 3. Run all `SurvivalOfTheFittest.Tests`
 
-Covered: gem tiers, risky vs safe thresholds, UI string parity, Clarity vs lifetime gems, die fairness, Random usage audit.
+Covered: gem tiers, risky vs safe thresholds, UI string parity, flag totals, die fairness, Random usage audit, encounter gates.
 
 ## Changing the maze
 

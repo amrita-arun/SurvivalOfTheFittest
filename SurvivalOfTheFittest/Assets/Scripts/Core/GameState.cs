@@ -5,7 +5,6 @@ namespace SurvivalOfTheFittest
         Tutorial,
         Playing,
         Encounter,
-        ClarityReveal,
         Won,
         Lost
     }

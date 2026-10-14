@@ -12,9 +12,11 @@ namespace SurvivalOfTheFittest
         private EncounterActionDef _chosenAction;
         private bool _awaitingAck;
         private bool _rollStarted;
+        private int _resolvedCount;
 
         public EncounterTrigger ActiveTrigger => _active;
         public bool IsEncounterOpen => _active != null;
+        public int ResolvedCount => _resolvedCount;
 
         private void Awake()
         {
@@ -40,6 +42,7 @@ namespace SurvivalOfTheFittest
             _chosenAction = null;
             _awaitingAck = false;
             _rollStarted = false;
+            _resolvedCount = 0;
         }
 
         public void BeginEncounter(EncounterTrigger trigger)
@@ -137,12 +140,14 @@ namespace SurvivalOfTheFittest
                 return;
 
             _active.MarkResolved();
+            _resolvedCount++;
             _active = null;
             _chosenAction = null;
             _awaitingAck = false;
             _rollStarted = false;
 
             UI.EncounterUI.Instance?.Hide();
+            GameManager.Instance?.OnEncounterResolved(_resolvedCount);
 
             if (GameManager.Instance != null &&
                 GameManager.Instance.State != GameState.Won &&
@@ -169,6 +174,7 @@ namespace SurvivalOfTheFittest
             _chosenAction = null;
             _awaitingAck = false;
             _rollStarted = false;
+            _resolvedCount = 0;
         }
 
         /// <summary>

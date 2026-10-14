@@ -48,7 +48,7 @@ namespace SurvivalOfTheFittest
             {
                 MazeId = 'A',
                 DisplayName = "The Ex-Situationship",
-                Dialogue = "Hey stranger… I've changed. (The playlist says otherwise.)",
+                Dialogue = "Hey... run it back?",
                 Color = new Color(1f, 0.35f, 0.45f, 1f),
                 SafeAction = new EncounterActionDef
                 {
@@ -56,7 +56,7 @@ namespace SurvivalOfTheFittest
                     Risk = EncounterRisk.Safe,
                     SuccessReward = EncounterRewardType.EscapeOnly,
                     FailExtra = EncounterFailExtra.None,
-                    SuccessFlavor = "Blocked. Muted. Spiritually unsubscribed.",
+                    SuccessFlavor = "Blocked! Nice job moving on.",
                     FailFlavor = "You hesitated. Feelings tax: 1 heart.",
                     RewardHint = "Escape safely"
                 },
@@ -66,8 +66,8 @@ namespace SurvivalOfTheFittest
                     Risk = EncounterRisk.Risky,
                     SuccessReward = EncounterRewardType.BonusGem,
                     FailExtra = EncounterFailExtra.CheckpointReturn,
-                    SuccessFlavor = "Closure AND a shiny green flag. Growth looks good on you.",
-                    FailFlavor = "Emotional ambush! Heart lost — back to safer ground.",
+                    SuccessFlavor = "Closure AND a green flag. Would have never guessed...",
+                    FailFlavor = "You got gaslit and lowkey believed them... Heart lost!",
                     RewardHint = "+1 green flag"
                 }
             };
@@ -87,7 +87,7 @@ namespace SurvivalOfTheFittest
                     Risk = EncounterRisk.Safe,
                     SuccessReward = EncounterRewardType.EscapeOnly,
                     FailExtra = EncounterFailExtra.None,
-                    SuccessFlavor = "Deleted. Your thumb is free. For now.",
+                    SuccessFlavor = "Deleted, you beat the paradox of choice!",
                     FailFlavor = "One more notification got you. -1 heart.",
                     RewardHint = "Escape safely"
                 },
@@ -111,7 +111,7 @@ namespace SurvivalOfTheFittest
             {
                 MazeId = 'C',
                 DisplayName = "Mixed Signals",
-                Dialogue = "I'm not looking for anything serious… but where are you?",
+                Dialogue = "I'm not looking for anything serious… but wya",
                 Color = new Color(1f, 0.85f, 0.25f, 1f),
                 SafeAction = new EncounterActionDef
                 {
@@ -119,7 +119,7 @@ namespace SurvivalOfTheFittest
                     Risk = EncounterRisk.Safe,
                     SuccessReward = EncounterRewardType.EscapeOnly,
                     FailExtra = EncounterFailExtra.None,
-                    SuccessFlavor = "You asked. They vanished. Win?",
+                    SuccessFlavor = "Confrontation scared them away. A win is a win..?",
                     FailFlavor = "They replied 'haha yeah'. -1 heart.",
                     RewardHint = "Escape safely"
                 },
@@ -130,8 +130,8 @@ namespace SurvivalOfTheFittest
                     SuccessReward = EncounterRewardType.BonusTime,
                     SuccessTimeBonus = 5f,
                     FailExtra = EncounterFailExtra.ReturnLastSafe,
-                    SuccessFlavor = "Chaotic synchronization. +5 seconds of borrowed confidence.",
-                    FailFlavor = "You matched the vibe… into a dead end. Back you go.",
+                    SuccessFlavor = "Okay nonchalant!! +5 seconds of borrowed confidence.",
+                    FailFlavor = "You matched their vibe… into a dead end.",
                     RewardHint = "+5 seconds"
                 }
             };

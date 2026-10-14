@@ -10,12 +10,13 @@ namespace SurvivalOfTheFittest.UI
         private Text _timeText;
         private Text _heartsText;
         private Text _gemsText;
-        private Text _clarityText;
         private Text _tierText;
+        private Text _encounterText;
         private Text _controlsText;
         private Text _bannerText;
+        private Text _dashText;
         private CanvasGroup _rootGroup;
-        private Image[] _clarityPips;
+        private Image _dashFill;
 
         private void Awake()
         {
@@ -35,39 +36,45 @@ namespace SurvivalOfTheFittest.UI
             _rootGroup.blocksRaycasts = false;
 
             var top = UiFactory.Box(root, "TopBar", new Vector2(0, 1), new Vector2(1, 1),
-                new Vector2(20, -90), new Vector2(-20, -16), new Color(0f, 0f, 0f, 0.45f));
+                new Vector2(16, -100), new Vector2(-16, -12), new Color(0f, 0f, 0f, 0.5f));
 
-            _timeText = UiFactory.Text(top, "Time", "Time 90", 28, new Color(0.6f, 1f, 1f), TextAnchor.MiddleLeft, FontStyle.Bold);
-            SetRect(_timeText.rectTransform, new Vector2(0, 0), new Vector2(0.25f, 1), Vector2.zero, Vector2.zero);
+            _timeText = UiFactory.Text(top, "Time", "Time 90", 26, new Color(0.6f, 1f, 1f), TextAnchor.MiddleLeft, FontStyle.Bold);
+            SetRect(_timeText.rectTransform, new Vector2(0, 0.5f), new Vector2(0.22f, 1), Vector2.zero, Vector2.zero);
 
-            _heartsText = UiFactory.Text(top, "Hearts", "♥♥♥", 28, new Color(1f, 0.35f, 0.5f), TextAnchor.MiddleCenter, FontStyle.Bold);
-            SetRect(_heartsText.rectTransform, new Vector2(0.25f, 0), new Vector2(0.45f, 1), Vector2.zero, Vector2.zero);
+            _heartsText = UiFactory.Text(top, "Hearts", "♥♥♥", 26, new Color(1f, 0.35f, 0.5f), TextAnchor.MiddleCenter, FontStyle.Bold);
+            SetRect(_heartsText.rectTransform, new Vector2(0.22f, 0.5f), new Vector2(0.4f, 1), Vector2.zero, Vector2.zero);
 
-            _gemsText = UiFactory.Text(top, "Gems", "Flags 0", 26, new Color(0.3f, 0.9f, 0.45f), TextAnchor.MiddleCenter, FontStyle.Bold);
-            SetRect(_gemsText.rectTransform, new Vector2(0.45f, 0), new Vector2(0.65f, 1), Vector2.zero, Vector2.zero);
+            _gemsText = UiFactory.Text(top, "Gems", "Flags 0", 22, new Color(0.3f, 0.9f, 0.45f), TextAnchor.MiddleCenter, FontStyle.Bold);
+            SetRect(_gemsText.rectTransform, new Vector2(0.4f, 0.5f), new Vector2(0.58f, 1), Vector2.zero, Vector2.zero);
 
-            _tierText = UiFactory.Text(top, "Tier", "Unprepared", 22, new Color(1f, 0.85f, 0.4f), TextAnchor.MiddleCenter);
-            SetRect(_tierText.rectTransform, new Vector2(0.65f, 0), new Vector2(0.85f, 1), Vector2.zero, Vector2.zero);
+            _tierText = UiFactory.Text(top, "Tier", "Unprepared", 18, new Color(1f, 0.85f, 0.4f), TextAnchor.MiddleCenter);
+            SetRect(_tierText.rectTransform, new Vector2(0.58f, 0.5f), new Vector2(0.98f, 1), Vector2.zero, Vector2.zero);
 
-            var clarityBox = UiFactory.Box(top, "Clarity", new Vector2(0.85f, 0.15f), new Vector2(0.98f, 0.85f),
-                Vector2.zero, Vector2.zero, new Color(0.15f, 0.05f, 0.2f, 0.8f));
-            _clarityText = UiFactory.Text(clarityBox, "ClarityLabel", "CLARITY", 14, Color.white, TextAnchor.UpperCenter, FontStyle.Bold);
-            SetRect(_clarityText.rectTransform, new Vector2(0, 0.55f), new Vector2(1, 1), Vector2.zero, Vector2.zero);
+            _encounterText = UiFactory.Text(top, "Encounters", "Obstacles 0/3", 18,
+                new Color(1f, 0.55f, 0.75f), TextAnchor.MiddleLeft, FontStyle.Bold);
+            SetRect(_encounterText.rectTransform, new Vector2(0, 0), new Vector2(0.45f, 0.5f), Vector2.zero, Vector2.zero);
 
-            _clarityPips = new Image[3];
-            for (var i = 0; i < 3; i++)
-            {
-                var pip = UiFactory.Box(clarityBox, $"Pip{i}", new Vector2(0.1f + i * 0.3f, 0.1f),
-                    new Vector2(0.35f + i * 0.3f, 0.5f), Vector2.zero, Vector2.zero, new Color(0.3f, 0.3f, 0.35f, 1f));
-                _clarityPips[i] = pip.GetComponent<Image>();
-            }
+            var dashBox = UiFactory.Box(top, "Dash", new Vector2(0.5f, 0.08f), new Vector2(0.98f, 0.42f),
+                Vector2.zero, Vector2.zero, new Color(0.1f, 0.15f, 0.2f, 0.85f));
+            _dashText = UiFactory.Text(dashBox, "DashLabel", "DASH Ready  (Shift/Space)", 14,
+                new Color(0.5f, 1f, 0.9f), TextAnchor.MiddleLeft);
+            SetRect(_dashText.rectTransform, new Vector2(0.02f, 0), new Vector2(0.7f, 1), Vector2.zero, Vector2.zero);
 
-            _controlsText = UiFactory.Text(root, "Controls", "WASD / Arrows  •  R Restart  •  Q/Esc Quit", 18,
-                new Color(0.75f, 0.75f, 0.85f, 0.85f), TextAnchor.LowerCenter);
+            var fillBg = UiFactory.Box(dashBox, "DashFillBg", new Vector2(0.72f, 0.25f), new Vector2(0.96f, 0.75f),
+                Vector2.zero, Vector2.zero, new Color(0.2f, 0.25f, 0.3f, 1f));
+            var fill = UiFactory.Box(fillBg, "DashFill", new Vector2(0, 0), new Vector2(1, 1),
+                Vector2.zero, Vector2.zero, new Color(0.35f, 1f, 0.85f, 1f));
+            _dashFill = fill.GetComponent<Image>();
+            _dashFill.type = Image.Type.Filled;
+            _dashFill.fillMethod = Image.FillMethod.Horizontal;
+
+            _controlsText = UiFactory.Text(root, "Controls",
+                "WASD / Arrows move  •  Shift/Space dash  •  R restart  •  Q/Esc quit", 17,
+                new Color(0.75f, 0.75f, 0.85f, 0.9f), TextAnchor.LowerCenter);
             SetRect(_controlsText.rectTransform, new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 12), new Vector2(0, 40));
 
-            _bannerText = UiFactory.Text(root, "Banner", "", 42, new Color(1f, 0.45f, 0.95f), TextAnchor.MiddleCenter, FontStyle.Bold);
-            SetRect(_bannerText.rectTransform, new Vector2(0.15f, 0.55f), new Vector2(0.85f, 0.7f), Vector2.zero, Vector2.zero);
+            _bannerText = UiFactory.Text(root, "Banner", "", 40, new Color(1f, 0.45f, 0.95f), TextAnchor.MiddleCenter, FontStyle.Bold);
+            SetRect(_bannerText.rectTransform, new Vector2(0.12f, 0.55f), new Vector2(0.88f, 0.7f), Vector2.zero, Vector2.zero);
             _bannerText.gameObject.SetActive(false);
         }
 
@@ -85,10 +92,22 @@ namespace SurvivalOfTheFittest.UI
                 _rootGroup.alpha = visible ? 1f : 0f;
         }
 
-        public void UpdateHud(float timeRemaining, int hearts, int lifetimeGems, int claritySegments)
+        public void UpdateHud(
+            float timeRemaining,
+            int hearts,
+            int lifetimeGems,
+            int encountersResolved,
+            int encountersRequired,
+            float dashCooldownNormalized)
         {
             if (_timeText != null)
-                _timeText.text = $"TIME {Mathf.CeilToInt(Mathf.Max(0f, timeRemaining))}";
+            {
+                var secs = Mathf.CeilToInt(Mathf.Max(0f, timeRemaining));
+                _timeText.text = $"TIME {secs}";
+                _timeText.color = timeRemaining <= 15f
+                    ? Color.Lerp(new Color(1f, 0.3f, 0.35f), new Color(1f, 0.85f, 0.2f), Mathf.PingPong(Time.unscaledTime * 3f, 1f))
+                    : new Color(0.6f, 1f, 1f);
+            }
 
             if (_heartsText != null)
             {
@@ -105,16 +124,26 @@ namespace SurvivalOfTheFittest.UI
                 _tierText.text = GemOddsCalculator.GetTierDisplayName(tier);
             }
 
-            if (_clarityPips != null)
+            if (_encounterText != null)
             {
-                for (var i = 0; i < _clarityPips.Length; i++)
-                {
-                    if (_clarityPips[i] == null)
-                        continue;
-                    _clarityPips[i].color = i < claritySegments
-                        ? new Color(1f, 0.4f, 0.95f, 1f)
-                        : new Color(0.3f, 0.3f, 0.35f, 1f);
-                }
+                var unlocked = encountersResolved >= encountersRequired;
+                _encounterText.text = unlocked
+                    ? $"Obstacles {encountersResolved}/{encountersRequired}  ✓ EXIT OPEN"
+                    : $"Obstacles {encountersResolved}/{encountersRequired}  (exit locked)";
+                _encounterText.color = unlocked
+                    ? new Color(0.45f, 1f, 0.7f)
+                    : new Color(1f, 0.55f, 0.75f);
+            }
+
+            if (_dashFill != null)
+            {
+                var ready = dashCooldownNormalized <= 0.01f;
+                _dashFill.fillAmount = ready ? 1f : 1f - dashCooldownNormalized;
+                _dashFill.color = ready
+                    ? new Color(0.35f, 1f, 0.85f, 1f)
+                    : new Color(0.4f, 0.55f, 0.6f, 1f);
+                if (_dashText != null)
+                    _dashText.text = ready ? "DASH Ready  (Shift/Space)" : "DASH cooling…";
             }
         }
 

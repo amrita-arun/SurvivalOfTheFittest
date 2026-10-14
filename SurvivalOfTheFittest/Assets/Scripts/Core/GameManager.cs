@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,24 +12,24 @@ namespace SurvivalOfTheFittest
         public static GameManager Instance { get; private set; }
 
         [Header("Run Settings")]
-        [Tooltip("Starting countdown in seconds.")]
+        [Tooltip("Starting countdown in seconds. Tighter for a harder 1–2 min run.")]
         [SerializeField] private float startingTime = 90f;
 
         [SerializeField] private int startingHearts = 3;
+
+        [Tooltip("Exit stays locked until this many dating obstacles are cleared. The maze also forces a walk through all three.")]
+        [SerializeField] private int encountersRequiredToExit = 3;
 
         public GameState State { get; private set; } = GameState.Tutorial;
         public float TimeRemaining { get; private set; }
         public int Hearts { get; private set; }
         public int LifetimeGems => _revealMeter != null ? _revealMeter.LifetimeGems : 0;
-        public int ClaritySegments => _revealMeter != null ? _revealMeter.SegmentFill : 0;
 
-        public bool AllowsPlayerMovement =>
-            State == GameState.Playing || State == GameState.ClarityReveal;
+        public bool AllowsPlayerMovement => State == GameState.Playing;
 
-        public bool AllowsGameplayMotion =>
-            State == GameState.Playing || State == GameState.ClarityReveal;
+        public bool AllowsGameplayMotion => State == GameState.Playing;
 
-        public bool TimerRunning => State == GameState.Playing || State == GameState.ClarityReveal;
+        public bool TimerRunning => State == GameState.Playing;
 
         private MazeBuilder _maze;
         private PlayerController _player;
@@ -38,7 +37,6 @@ namespace SurvivalOfTheFittest
         private RevealMeter _revealMeter;
         private readonly List<GameObject> _spawnedGems = new();
         private string _lossReason = "";
-        private bool _clarityBusy;
 
         private void Awake()
         {
@@ -70,7 +68,6 @@ namespace SurvivalOfTheFittest
             Hearts = startingHearts;
             _revealMeter?.ResetMeters();
             _fog?.ResetFog();
-            _clarityBusy = false;
             _lossReason = "";
 
             UI.TutorialUI.Instance?.Show();
@@ -83,6 +80,7 @@ namespace SurvivalOfTheFittest
 
         public void StartGameFromTutorial()
         {
+            GameAudio.Instance?.PlayUiClick();
             UI.TutorialUI.Instance?.Hide();
             UI.HUDController.Instance?.SetVisible(true);
             State = GameState.Playing;
@@ -127,11 +125,13 @@ namespace SurvivalOfTheFittest
                 return;
 
             GameAudio.Instance?.PlayGem();
-            var clarity = _revealMeter.RegisterGem(1);
-            RefreshHud();
+            ScreenFlash.Instance?.Flash(new Color(0.3f, 1f, 0.55f), 0.28f, 0.2f);
+            CameraJuice.Instance?.Shake(0.08f, 0.12f);
+            if (_player != null)
+                CollectBurst.Spawn(_player.transform.position, new Color(0.35f, 1f, 0.55f));
 
-            if (clarity && !_clarityBusy)
-                StartCoroutine(ClarityRoutine());
+            _revealMeter.RegisterGem(1);
+            RefreshHud();
         }
 
         public void GrantBonusGem()
@@ -140,38 +140,9 @@ namespace SurvivalOfTheFittest
                 return;
 
             GameAudio.Instance?.PlayGem();
-            var clarity = _revealMeter.RegisterGem(1);
+            _revealMeter.RegisterGem(1);
             RefreshHud();
             UI.EncounterUI.Instance?.RefreshOdds(LifetimeGems);
-
-            if (clarity && !_clarityBusy && State != GameState.Lost && State != GameState.Won)
-                StartCoroutine(ClarityRoutine());
-        }
-
-        private IEnumerator ClarityRoutine()
-        {
-            _clarityBusy = true;
-            var enteredFromPlaying = State == GameState.Playing;
-            if (enteredFromPlaying)
-                State = GameState.ClarityReveal;
-
-            GameAudio.Instance?.PlayClarity();
-            UI.HUDController.Instance?.ShowBanner("CLARITY ACTIVATED!", 2f);
-
-            var done = false;
-            _fog?.PlayFullReveal(_revealMeter != null ? _revealMeter.RevealDuration : 2f, () => done = true);
-            while (!done)
-                yield return null;
-
-            // Clarity segments already cleared when the 3rd gem filled the meter.
-            // Resetting again must never touch LifetimeGems.
-            _revealMeter?.ResetClaritySegmentsOnly();
-
-            if (enteredFromPlaying && State == GameState.ClarityReveal)
-                State = GameState.Playing;
-
-            _clarityBusy = false;
-            RefreshHud();
         }
 
         public void EnterEncounter()
@@ -194,10 +165,27 @@ namespace SurvivalOfTheFittest
         public void Damage(int amount)
         {
             Hearts = Mathf.Max(0, Hearts - amount);
+            _player?.PlayHurtPulse();
+            ScreenFlash.Instance?.Flash(new Color(1f, 0.2f, 0.35f), 0.5f, 0.28f);
+            CameraJuice.Instance?.Shake(0.28f, 0.22f);
             RefreshHud();
             if (Hearts <= 0)
                 Lose("You lost all your hearts. Emotional damage: critical.");
         }
+
+        public void OnEncounterResolved(int resolvedCount)
+        {
+            RefreshHud();
+            if (resolvedCount >= encountersRequiredToExit)
+                UI.HUDController.Instance?.ShowBanner("EXIT UNLOCKED!", 1.4f);
+        }
+
+        public int EncountersRequiredToExit => encountersRequiredToExit;
+
+        public int EncountersResolved =>
+            EncounterManager.Instance != null ? EncounterManager.Instance.ResolvedCount : 0;
+
+        public bool ExitIsUnlocked => EncountersResolved >= encountersRequiredToExit;
 
         public void AddTime(float delta)
         {
@@ -214,13 +202,24 @@ namespace SurvivalOfTheFittest
 
         public void TryWin()
         {
-            if (State != GameState.Playing && State != GameState.ClarityReveal)
+            if (State != GameState.Playing)
                 return;
+
+            if (!ExitIsUnlocked)
+            {
+                var need = encountersRequiredToExit - EncountersResolved;
+                GameAudio.Instance?.PlayBlocked();
+                CameraJuice.Instance?.Shake(0.12f, 0.15f);
+                UI.HUDController.Instance?.ShowBanner(
+                    $"EXIT LOCKED — clear {need} more obstacle{(need == 1 ? "" : "s")}!", 1.6f);
+                return;
+            }
 
             State = GameState.Won;
             _player?.SetCanMove(false);
             EncounterManager.Instance?.ForceClose();
             GameAudio.Instance?.PlayWin();
+            ScreenFlash.Instance?.Flash(new Color(0.4f, 1f, 0.8f), 0.45f, 0.4f);
             UI.GameOverUI.Instance?.ShowWin(TimeRemaining, LifetimeGems);
         }
 
@@ -239,8 +238,6 @@ namespace SurvivalOfTheFittest
 
         public void RestartGame()
         {
-            StopAllCoroutines();
-            _clarityBusy = false;
             GameBootstrap.Instance?.RebuildRun();
         }
 
@@ -260,7 +257,13 @@ namespace SurvivalOfTheFittest
 
         private void RefreshHud()
         {
-            UI.HUDController.Instance?.UpdateHud(TimeRemaining, Hearts, LifetimeGems, ClaritySegments);
+            UI.HUDController.Instance?.UpdateHud(
+                TimeRemaining,
+                Hearts,
+                LifetimeGems,
+                EncountersResolved,
+                encountersRequiredToExit,
+                _player != null ? _player.DashCooldownNormalized : 0f);
         }
     }
 }

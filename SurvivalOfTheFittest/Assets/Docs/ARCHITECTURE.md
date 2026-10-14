@@ -1,5 +1,15 @@
 # Architecture — Gem-Based Encounter Odds
 
+## Maze strategy (deterministic layout)
+
+The maze is a flag garden beside a braided route through three gates:
+
+- Green flags are detours. Most can be reached before a fight, and one sits later.
+- The only way to the exit passes through A, then B, then C.
+- Soft gate matches that: clear all **3** encounters to unlock the exit.
+- There is no full-maze reveal. Visited tiles fade back to dark.
+- Core loop: spend the clock on the flags you can afford, then walk into the gates. The run is 90 seconds. A full flag sweep is still a long detour.
+
 ## Single randomized system
 
 Only **`DiceRoller`** may call `UnityEngine.Random.Range(1, 7)`.
@@ -10,11 +20,11 @@ Everything else is deterministic:
 - Fixed gem / encounter / exit positions
 - Gem confidence tiers
 - Safe vs risky action modifiers
-- Fog, Clarity reveal, timers, UI
+- Fog, timers, UI
 
 This is **output randomness**: the player chooses an action first; the fair d6 then resolves success.
 
-## Gem tiers (lifetime total, not Clarity meter)
+## Gem tiers (lifetime flag total)
 
 | Lifetime gems | Tier | Safe success | Risky success |
 |---------------|------|--------------|---------------|
@@ -24,15 +34,13 @@ This is **output randomness**: the player chooses an action first; the fair d6 t
 
 Risky actions use `safeRequired + 1`, clamped to **2–6**.
 
-Activating Clarity resets the **3-segment meter only**. Lifetime gems (and odds) are unchanged.
-
 ## Key types
 
 - `GemOddsCalculator` — pure odds math (unit tested)
-- `RevealMeter` — lifetime gems + Clarity segments + score
+- `RevealMeter` — lifetime flags + score
 - `DiceRoller` — fair d6 + unscaled animation + debug override
 - `EncounterManager` / `EncounterUI` — choice → one roll → ack
-- `GameManager` — centralized state (Tutorial / Playing / Encounter / Clarity / Win / Loss)
+- `GameManager` — centralized state (Tutorial / Playing / Encounter / Win / Loss)
 - `GameBootstrap` — runtime scene construction + restart rebuild
 
 ## Data flow (encounter)

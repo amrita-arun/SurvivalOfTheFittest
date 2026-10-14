@@ -8,13 +8,12 @@
 - [ ] Diagonal movement is not faster than cardinal movement
 - [ ] Maze layout is identical after pressing R
 
-## Fog & Clarity
+## Fog
 
 - [ ] Maze starts mostly dark
 - [ ] Soft circular visibility follows the player
 - [ ] Leaving an area returns it to darkness (no permanent uncover)
-- [ ] Collecting 3 gems shows **CLARITY ACTIVATED!** and reveals the maze ~2s
-- [ ] Clarity meter resets; lifetime gem count does **not**
+- [ ] Collecting flags never reveals the whole maze
 
 ## Gems & odds
 
@@ -35,7 +34,7 @@
 - [ ] Result text: “You rolled X. You needed Y or higher…”
 - [ ] Success / failure effects apply correctly
 - [ ] Resolved encounter cannot trigger again
-- [ ] Bonus gems update lifetime total + Clarity meter + odds UI
+- [ ] Bonus gems update lifetime total + odds UI
 
 ## Win / loss / meta
 
@@ -44,7 +43,7 @@
 - [ ] Reaching EXIT opens win screen
 - [ ] 0 hearts opens loss screen
 - [ ] Timer 0 opens loss screen
-- [ ] R fully resets maze, encounters, gems, timer, hearts, Clarity
+- [ ] R fully resets maze, encounters, gems, timer, hearts
 - [ ] Q / Esc quits (stops Play Mode in Editor)
 - [ ] Console has no red errors
 - [ ] No `UnityEngine.Random` outside `DiceRoller`

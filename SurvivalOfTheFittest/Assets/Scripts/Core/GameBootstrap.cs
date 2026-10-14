@@ -67,6 +67,7 @@ namespace SurvivalOfTheFittest
             GetOrAdd<DiceRoller>(systems);
             GetOrAdd<EncounterManager>(systems);
             GetOrAdd<GameAudio>(systems);
+            GetOrAdd<CameraJuice>(systems);
             _revealMeter = GetOrAdd<RevealMeter>(systems);
 
             _worldRoot = GetOrCreate("World").transform;
@@ -144,6 +145,7 @@ namespace SurvivalOfTheFittest
             gsr.color = new Color(0.3f, 1f, 0.85f, 0.25f);
             gsr.sortingOrder = 9;
 
+            _player.SetVisualRefs(sr, glow.transform);
             _runtimeObjects.Add(go);
         }
 
@@ -213,6 +215,9 @@ namespace SurvivalOfTheFittest
             var gameOver = canvas.gameObject.AddComponent<GameOverUI>();
             gameOver.Build(canvas.transform);
 
+            var flash = canvas.gameObject.AddComponent<ScreenFlash>();
+            flash.Build(canvas.transform);
+
             _uiBuilt = true;
         }
 
@@ -241,6 +246,7 @@ namespace SurvivalOfTheFittest
             cam.clearFlags = CameraClearFlags.SolidColor;
             cam.backgroundColor = Color.black;
             cam.transform.position = new Vector3(MazeData.MazeCenterWorld.x, MazeData.MazeCenterWorld.y, -10f);
+            CameraJuice.Instance?.CacheBase();
         }
 
         private void ConfigureCameraForMaze()
@@ -255,6 +261,7 @@ namespace SurvivalOfTheFittest
             var halfH = MazeData.MazeSizeWorld.y * 0.5f + 0.5f;
             var halfW = MazeData.MazeSizeWorld.x * 0.5f + 0.5f;
             cam.orthographicSize = Mathf.Max(halfH, halfW / aspect);
+            CameraJuice.Instance?.CacheBase();
         }
 
         private GameObject GetOrCreate(string name)
