@@ -17,9 +17,6 @@ namespace SurvivalOfTheFittest
 
         [SerializeField] private int startingHearts = 3;
 
-        [Tooltip("Exit stays locked until this many dating obstacles are cleared. The maze also forces a walk through all three.")]
-        [SerializeField] private int encountersRequiredToExit = 3;
-
         public GameState State { get; private set; } = GameState.Tutorial;
         public float TimeRemaining { get; private set; }
         public int Hearts { get; private set; }
@@ -176,20 +173,6 @@ namespace SurvivalOfTheFittest
                 Lose("You lost all your hearts. Emotional damage: critical.");
         }
 
-        public void OnEncounterResolved(int resolvedCount)
-        {
-            RefreshHud();
-            if (resolvedCount >= encountersRequiredToExit)
-                UI.HUDController.Instance?.ShowBanner("EXIT UNLOCKED!", 1.4f);
-        }
-
-        public int EncountersRequiredToExit => encountersRequiredToExit;
-
-        public int EncountersResolved =>
-            EncounterManager.Instance != null ? EncounterManager.Instance.ResolvedCount : 0;
-
-        public bool ExitIsUnlocked => EncountersResolved >= encountersRequiredToExit;
-
         public void AddTime(float delta)
         {
             TimeRemaining = Mathf.Max(0f, TimeRemaining + delta);
@@ -207,16 +190,6 @@ namespace SurvivalOfTheFittest
         {
             if (State != GameState.Playing)
                 return;
-
-            if (!ExitIsUnlocked)
-            {
-                var need = encountersRequiredToExit - EncountersResolved;
-                GameAudio.Instance?.PlayBlocked();
-                CameraJuice.Instance?.Shake(0.12f, 0.15f);
-                UI.HUDController.Instance?.ShowBanner(
-                    $"EXIT LOCKED — clear {need} more obstacle{(need == 1 ? "" : "s")}!", 1.6f);
-                return;
-            }
 
             State = GameState.Won;
             _player?.SetCanMove(false);
@@ -263,9 +236,7 @@ namespace SurvivalOfTheFittest
             UI.HUDController.Instance?.UpdateHud(
                 TimeRemaining,
                 Hearts,
-                LifetimeGems,
-                EncountersResolved,
-                encountersRequiredToExit);
+                LifetimeGems);
         }
     }
 }

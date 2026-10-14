@@ -41,7 +41,6 @@ namespace SurvivalOfTheFittest
         public Color Color;
         public EncounterActionDef SafeAction;
         public EncounterActionDef RiskyAction;
-        public bool CountsTowardExit = true;
 
         public static EncounterDefinition CreateEx()
         {
@@ -146,7 +145,6 @@ namespace SurvivalOfTheFittest
                 DisplayName = "The Family Friend",
                 Dialogue = "Your mom gave me your number... I already added you on LinkedIn.",
                 Color = new Color(1f, 0.6f, 0.3f, 1f),
-                CountsTowardExit = false,
                 SafeAction = new EncounterActionDef
                 {
                     Label = "Politely Decline",
@@ -179,7 +177,6 @@ namespace SurvivalOfTheFittest
                 DisplayName = "Your Friend's Ex",
                 Dialogue = "I know I'm your bestie's ex... but we'd be kind of perfect, no?",
                 Color = new Color(0.7f, 0.4f, 0.95f, 1f),
-                CountsTowardExit = false,
                 SafeAction = new EncounterActionDef
                 {
                     Label = "Respect the Code",
